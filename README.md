@@ -45,6 +45,8 @@ Erase Flash : "Only Sketch"  ( files uploaded remain in esp module)
 
 I used "arduino-1.6.5-r5-windows" portable for compile
 
+You can ulpoad binary file "costycnc.wifi.1.10.cpp.bin" with https://github.com/nodemcu/nodemcu-flasher
+
 www.costycnc.it
 
 
