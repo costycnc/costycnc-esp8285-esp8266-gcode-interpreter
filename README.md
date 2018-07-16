@@ -38,9 +38,12 @@ Reset Method: "nodemcu"
 .
 .
 .
+
 Upload Speed: "921600"   (maxim that your pc permit!!!!)
 
 Erase Flash : "Only Sketch"  ( files uploaded remain in esp module)
+
+I used "arduino-1.6.5-r5-windows" portable for compile
 
 www.costycnc.it
 
