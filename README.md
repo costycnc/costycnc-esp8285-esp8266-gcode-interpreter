@@ -22,18 +22,26 @@ This variant is in acces point mode that mean that you not can use your internet
 need to disconnect from costycnc wifi and connect to your wifi ... but in future i work to resolve this problem.
 
 The program can be uploaded in esp8266 with arduino settings:
+
 Board:"Generic ESP8266 Module"
+
 Flash Mode: "DIO"
+
 Flash Size: "4M(3M SPIFFS)"
+
 .
 .
 .
+
 Reset Method: "nodemcu"
+
 .
 .
 .
-Upload Speed: "921600"   (maxim is your pc permit!!!!)
+Upload Speed: "921600"   (maxim that your pc permit!!!!)
+
 Erase Flash : "Only Sketch"  ( files uploaded remain in esp module)
+
 www.costycnc.it
 
 
