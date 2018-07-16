@@ -1,0 +1,344 @@
+<html>
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-11597845-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-11597845-3');
+</script>
+<title>image to gcode: convert your images to gcode</title>
+<meta charset="UTF-8">
+<meta name="description" content="images to gcode">
+<meta name="keywords" content="gcode,costycnc,cnc,vector,transform">
+<meta name="author" content="Costycnc">
+</head>
+<body>
+<a title="site stats" href="http://statcounter.com/"
+target="_blank"><img
+src="http://c.statcounter.com/11329943/0/4453ad53/0/" alt="site
+stats" style="border:none;"></a>Image to gcode - easy and fast (for costycnc low cost foam cutter machine)<br>If you want use this page offline download from <a href="http://costycnc.it/img_nc/img_nc.zip">HERE</a> and open index.html<br>And <a href="img_nc_x_y.zip">HERE</a> with x and y<br><br>
+<div>
+<input type='file'  accept='.bmp,.jpg,.gif,.png' onchange='openFile(event)'>
+scale=<input id="scale" value=".1" >
+<button onclick="saveTextAsFile()" >Save gcode</button></b> <br></div>	
+
+
+
+<p id="area_dimension"></p>
+
+<canvas id="myCanvas1" width="480" height="300" style="border:1px solid #FF0000;" ><br>
+
+
+
+
+<script src="Potrace.js"></script>
+
+<script>
+/* scos din cod html
+
+<textarea  id="mytext" rows="20" cols="50"></textarea>
+<textarea  id="mytext1" rows="20" cols="50"></textarea><br>
+
+     <div id="imgdiv"> </div>
+      <div> </div>
+      <div id="svgdiv"> </div>
+
+*/
+var div=""; //= document.getElementById('mytext');
+var area_dimension = document.getElementById('area_dimension');
+var div1;// = document.getElementById('mytext1');
+
+var text1;
+
+
+function gcode_verify(){
+
+var datafile;
+//var div = document.getElementById('mytext');
+var x=0;
+var y=0;
+var x1=0;
+var y1=0;
+var xfinal=0;
+var yfinal=0;
+
+
+
+var n=0;
+datafile=div;
+ var c = document.getElementById("myCanvas1");
+ //alert(c);
+    var ctx = c.getContext("2d");
+	ctx.moveTo(0,0);
+while(1){
+while(1){
+n++;
+if(datafile[n]=="X")x=parseFloat(datafile.slice(n+1, n+10));
+else if(datafile[n]=="Y")y=parseFloat(datafile.slice(n+1, n+10));
+if(datafile.charCodeAt(n)==10)break;
+if(n > datafile.length)break;
+	  
+	}
+	if(x>xfinal)xfinal=x;
+	if(y>yfinal)yfinal=y;
+	ctx.lineTo(x*2,y*2);
+	ctx.stroke();
+if(n > datafile.length)break;	
+}	
+	
+	xfinal=xfinal/3.78;
+	yfinal=yfinal/3.78;
+	xfinal=Math.round(xfinal * Math.pow(10, 2)) / Math.pow(10, 2)  ;
+	yfinal=Math.round(yfinal * Math.pow(10, 2)) / Math.pow(10, 2)  ;
+
+	//alert('Area '+xfinal+'cm X '+yfinal+'cm');
+area_dimension.innerHTML='Area= '+xfinal+'cm X '+yfinal+'cm';
+}//function gcode_verify()
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+function saveTextAsFile()
+{ 
+    //var textToSave = document.getElementById("mytext").value;
+    //var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+	var textToSaveAsBlob = new Blob([div], {type:"text/plain"});
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    var fileNameToSaveAs = "costycnc.nc";
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = destroyClickedElement;
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+ 
+    downloadLink.click();
+}
+
+function destroyClickedElement(event)
+{
+    document.body.removeChild(event.target);
+}
+
+function myFunction(){
+//text1=Potrace.getSVG(1);
+//alert(text1);
+var contor=0;
+var xincep=0;
+var yincep=0;
+var p1x=0;
+var p1y=0;
+var p2x=0;
+var p2y=0;
+var xsfar=0;
+var ysfar=0;
+var n1=0;
+//var scale = document.getElementById('scale').value;
+//var division = document.getElementById('division').value;
+
+//path d="M111.792 7.750 C 109.785 10.407,102.466 13.840,100.798 12.907 C 
+var n = text1.indexOf('path d="M');
+n=n+9;
+var res = parseFloat(text1.slice(n, n+10));// '111.792 7.'
+//res=res*scale;
+//alert(res);
+n=n-9;
+xincep=res;
+var n = text1.indexOf(' ',n+10);
+n=n+1;//7.750 C 
+var res = parseFloat(text1.slice(n, n+10));
+//res=res*scale;
+//alert(res);
+yincep=res;
+
+div = div + 'G01 X'+Math.round(xincep * Math.pow(10, 2)) / Math.pow(10, 2)  +'\n';
+div = div + 'G01 X'+Math.round(xincep * Math.pow(10, 2)) / Math.pow(10, 2)  +' Y'+Math.round(yincep * Math.pow(10, 2)) / Math.pow(10, 2) +'\n';
+//alert(div.innerHTML);
+while (1) {
+
+var n = text1.indexOf(' ',n+1);
+//alert(text1.charAt(n+1));
+if(text1.charAt(n+1)=='C'){
+//path d="M111.792 7.750 C 109.785 10.407,102.466 13.840,100.798 12.907 C 
+var res = parseFloat(text1.slice(n+2, n+10));
+//res=res*scale;
+//alert(res);
+p1x=res;
+
+
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//alert(res);
+p1y=res;
+
+var n = text1.indexOf(',',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//alert(res);
+p2x=res;
+
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//alert(res);
+p2y=res;
+
+var n = text1.indexOf(',',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//alert(res);
+xsfar=res;
+
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//alert(res);
+ysfar=res;
+
+
+
+//*****************************
+
+var a = p1x - xincep
+var b = p1y - yincep
+var a = Math.sqrt( a*a + b*b );
+
+var b = p2x - p1x
+var c = p2y - p1y
+var b = Math.sqrt( b*b + c*c );
+
+var c = xsfar - p2x
+var d = ysfar - p2y
+var c = Math.sqrt( c*c + d*d );
+
+//g=1/((a+b+c)*division);
+g=1/(a+b+c);
+a=a+b+c;
+//alert('dist ='+a+' pezzi='+g);
+//******************************
+for (i = 0; i < 1; i += g) {
+	
+	var x=bezierx(i,xincep,p1x,p2x,xsfar);
+var y=beziery(i,yincep,p1y,p2y,ysfar);
+div = div + 'G01 X'+Math.round(x * Math.pow(10, 2)) / Math.pow(10, 2)  +' Y'+Math.round(y * Math.pow(10, 2)) / Math.pow(10, 2) +'\n';
+}
+
+
+
+//******************************************************************
+
+
+
+xincep=xsfar;
+yincep=ysfar;
+}
+else if(text1.charAt(n+1)=='L')
+{//alert("este L");
+
+//div.innerHTML = div.innerHTML +'(este linie) \n\n\n';
+var res = parseFloat(text1.slice(n+2, n+10));
+//res=res*scale;
+p1x=res;
+//console.log(res);
+
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//console.log(res);
+p1y=res;
+div = div + 'G01 X'+Math.round(p1x * Math.pow(10, 2)) / Math.pow(10, 2)  +' Y'+Math.round(p1y * Math.pow(10, 2)) / Math.pow(10, 2) +'\n';
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//console.log(res);
+p2x=res;
+
+var n = text1.indexOf(' ',n+3);
+var res = parseFloat(text1.slice(n+1, n+10));
+//res=res*scale;
+//console.log(res);
+
+p2y=res;
+div = div + 'G01 X'+Math.round(p2x * Math.pow(10, 2)) / Math.pow(10, 2)  +' Y'+Math.round(p2y * Math.pow(10, 2)) / Math.pow(10, 2) +'\n';
+
+xincep=p2x;
+yincep=p2y;
+
+
+}
+else if(text1.charAt(n+1)=='M'){console.log("este M");break;}
+else if(n<1){console.log("lenght depasit");break;}
+else {console.log("nimic");}
+
+}	//sfarsit while
+div = div + 'G01 Y0 \n';
+div = div + 'G01 X0 \n';
+
+}//sfarsit myFunction
+//*****************************************************
+
+ function bezierx(t, p0, p1, p2, p3) {
+      var s = 1 - t;
+      var x = s*s*s*p0 + 3*(s*s*t)*p1 + 3*(t*t*s)*p2 + t*t*t*p3;
+      return x;
+}
+function beziery(t, p0, p1, p2, p3) {
+      var s = 1 - t;
+      var y = s*s*s*p0 + 3*(s*s*t)*p1 + 3*(t*t*s)*p2 + t*t*t*p3;
+      return y;
+}
+	//***********************************************
+	
+	
+
+	
+	
+  var openFile = function(event) {
+    var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      var dataURL = reader.result;
+      //var output = document.getElementById('output');
+      //output.src = dataURL;
+	   
+
+	  
+    };
+    reader.readAsDataURL(input.files[0]);
+	Potrace.loadImageFromFile(input.files[0]);
+	Potrace.process(function(){
+    //displayImg();
+	var scale = document.getElementById('scale').value;
+    //displaySVG(scale);
+	text1=Potrace.getSVG(scale);
+	myFunction();
+	gcode_verify();
+
+	
+  });
+	
+  };
+</script>
+
+</body>
+</html>
