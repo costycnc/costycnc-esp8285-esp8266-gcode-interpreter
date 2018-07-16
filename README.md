@@ -1,5 +1,6 @@
 # costycnc-wifi
 Now costycnc serial program grbl decoder for 2 unipolar steppers in in wifi.
+
 Open wifi a try costycnc... connect it ... in case that your phone say " not internet" ... connect anyway.
 open upload.html and load all files from folder "toate" ... one by one
 You can verify files uploadet to esp8266 with http://192.168.4.1/list
