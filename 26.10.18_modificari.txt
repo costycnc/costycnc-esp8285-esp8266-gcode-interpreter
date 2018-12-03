@@ -1,0 +1,63 @@
+27.10.2018
+
+
+costycnc.wifi.2.0_classic 
++++++++++++++++++++++++++++++++++++++++++++++++++
+------------------------------------
+file _init
+------------------------------------
+
+dezactivat 
+//int X_STEPS_PER_MM=340; 
+//int Y_STEPS_PER_MM=340;
+//int FAST_XY_FEEDRATE=150;
+
+----------------------------------
+file costycnc.wifi.2.0_classic
+--------------------------------
+
+creat
+
+int X_STEPS_PER_MM=340; 
+int Y_STEPS_PER_MM=340;
+int FAST_XY_FEEDRATE=150;
+
+...
+
+SPIFFS.begin();                           // Start the SPI Flash Files System
+******de terminat citit valori una sub alta puse in text file*******
+insert:
+ File f = SPIFFS.open("/settings.txt", "r");
+ while(f.available()) {
+     t = f.read();
+     message += t;
+     if(t=='\n'){ //if line end
+       process_string(message,message.length()); //send gcode line to gcode interpreter
+       message="";       //empty gcode string
+       }
+    }
+f.close();
+*****
+
+  server.begin();
+
+----------------------------
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+folder index  file potracex.html
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function getSVG1  ( a fine)
+
+svg ="/Dimension\n/ "+maxx0+"mm x "+maxy0+"mm\n"+svg;
+    return svg;
+  }
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+de retinut per extragere data from file
+
+da custom.ino void arguments
+
+  String valx=server.arg("feedrate");
+  FAST_XY_FEEDRATE=valx.toInt();
+
+

@@ -39,6 +39,8 @@ void init_process_string()
 	for (byte i=0; i<COMMAND_SIZE; i++)
 		word1[i] = 0;
 	serial_count = 0;
+x_units = X_STEPS_PER_MM;
+y_units = Y_STEPS_PER_MM;
 }
 
 //our feedrate variables.
@@ -46,8 +48,9 @@ float feedrate = 0.0;
 long feedrate_micros = 0;
 
 //Read the string and execute instructions
-void process_string(char instruction[], int size)
+void process_string(String instruction, int size)
 {
+  Serial.print("acum sunt in process_string");
   int val;
 	//the character / means delete block... used for comments and stuff.
 	if (instruction[0] == '/')
@@ -409,7 +412,7 @@ void process_string(char instruction[], int size)
 }
 
 //look for the number that appears after the char key and return it
-double search_string(char key, char instruction[], int string_size)
+double search_string(char key, String instruction, int string_size)
 {
 	char temp[10] = "";
 
@@ -436,7 +439,7 @@ double search_string(char key, char instruction[], int string_size)
 }
 
 //look for the command if it exists.
-bool has_command(char key, char instruction[], int string_size)
+bool has_command(char key, String instruction, int string_size)
 {
 	for (byte i=0; i<string_size; i++)
 	{

@@ -1,11 +1,11 @@
 
 // define the parameters of our machine.
 #define X_STEPS_PER_INCH 416.772354
-int X_STEPS_PER_MM=340; //16.4083604
+//int X_STEPS_PER_MM=340; //16.4083604
 #define X_MOTOR_STEPS    400
 
 #define Y_STEPS_PER_INCH 416.772354
-int Y_STEPS_PER_MM=340;
+//int Y_STEPS_PER_MM=340;
 #define Y_MOTOR_STEPS    400
 
 #define Z_STEPS_PER_INCH 16256.0
@@ -13,7 +13,7 @@ int Y_STEPS_PER_MM=340;
 #define Z_MOTOR_STEPS    400
 
 //our maximum feedrates
-int FAST_XY_FEEDRATE=100.0;
+//int FAST_XY_FEEDRATE=150;
 #define FAST_Z_FEEDRATE  50.0
 
 // Units in curve section

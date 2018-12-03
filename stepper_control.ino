@@ -241,7 +241,8 @@ void calculate_deltas()
 	delta_units.x = fabs(target_units.x - current_units.x);
 	delta_units.y = fabs(target_units.y - current_units.y);
 	delta_units.z = fabs(target_units.z - current_units.z);
- Serial.print("delta_units.x=");Serial.print(delta_units.x);Serial.print("  delta_units.y=");Serial.println(delta_units.y);
+Serial.print("int X_STEPS_PER_MM=");
+Serial.println(X_STEPS_PER_MM);
 				
 	//set our steps current, target, and delta
 	current_steps.x = to_steps(x_units, current_units.x);
