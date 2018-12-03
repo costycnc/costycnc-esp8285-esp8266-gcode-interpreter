@@ -51,12 +51,14 @@ www.costycnc.it
 
 need to upload to module with http://ip_module/upload these files:
 
-toate/index.html
+from folder "toate" :
+     /index.html
      /settings.txt
      /success.html
      /test.nc
      /upload
-index/potracex.html
+from folder "index"  :
+     /potracex.html
      /potracex.js
      
 
