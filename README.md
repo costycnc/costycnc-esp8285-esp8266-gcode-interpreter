@@ -23,11 +23,11 @@ need to disconnect from costycnc wifi and connect to your wifi ... but in future
 
 The program can be uploaded in esp8266 with arduino settings:
 
-Board:"Generic ESP8266 Module"
+Board:"Generic ESP8285 Module"
 
 Flash Mode: "DIO"
 
-Flash Size: "4M(3M SPIFFS)"
+Flash Size: "1M(512k SPIFFS)"
 
 .
 .
@@ -49,6 +49,16 @@ You can ulpoad binary file "costycnc.wifi.1.10.cpp.bin" with https://github.com/
 
 www.costycnc.it
 
+need to upload to module with http://ip_module/upload these files:
+
+toate/index.html
+     /settings.txt
+     /success.html
+     /test.nc
+     /upload
+index/potracex.html
+     /potracex.js
+     
 
 
 
