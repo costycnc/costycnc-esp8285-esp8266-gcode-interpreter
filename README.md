@@ -1,4 +1,7 @@
 # costycnc-wifi
+
+see video on youtube https://www.youtube.com/watch?v=yehDBSj7vIg
+
 Now costycnc serial program grbl decoder for 2 unipolar steppers in in wifi.
 
 Open wifi a try costycnc... connect it ... in case that your phone say " not internet" ... connect anyway.
