@@ -71,7 +71,7 @@ ESP.eraseConfig();
 WiFi.disconnect(true);
 WiFi.mode(WIFI_AP);
 WiFi.softAP("Costycnc");
-  Serial.printf("Connecting to %s ", ssid);
+  Serial.printf("Try connecting to %s ", ssid);
   WiFi.begin(ssid, password);
   int attempt=0;
   while ((WiFi.status() != WL_CONNECTED) && attempt<10)//try 10 times to connect to router 
@@ -82,9 +82,9 @@ WiFi.softAP("Costycnc");
     Serial.print(attempt);
   }
   if(attempt < 10){
-  Serial.println(" connected to router");}
+  Serial.printlnln(" connected to router and local");}
     else{
-      Serial.println(" connected local");
+      Serial.println(" connected only local");
 }
 SPIFFS.begin();                           // Start the SPI Flash Files System
 
