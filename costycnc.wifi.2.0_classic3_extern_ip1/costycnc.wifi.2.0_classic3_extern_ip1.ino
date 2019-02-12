@@ -78,7 +78,7 @@ WiFi.softAP("Costycnc");
     // if not succeed ... connect locally
   {
     delay(500);
-    Serial.print(".");
+    Serial.print(attempt);
   }
   if(attempt < 10){
   Serial.println(" connected to router");}
