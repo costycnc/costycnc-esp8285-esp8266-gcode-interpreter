@@ -80,8 +80,11 @@ WiFi.softAP("Costycnc");
     delay(500);
     Serial.print(".");
   }
-  Serial.println(" connected");
-
+  if(attempt < 10){
+  Serial.println(" connected to router");}
+    else{
+      Serial.println(" connected local");
+}
 SPIFFS.begin();                           // Start the SPI Flash Files System
 
 readparam();
