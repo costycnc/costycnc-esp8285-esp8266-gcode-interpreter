@@ -82,7 +82,7 @@ WiFi.softAP("Costycnc");
     Serial.print(attempt);
   }
   if(attempt < 10){
-  Serial.printlnln(" connected to router and local");}
+  Serial.println(" connected to router and local");}
     else{
       Serial.println(" connected only local");
 }
