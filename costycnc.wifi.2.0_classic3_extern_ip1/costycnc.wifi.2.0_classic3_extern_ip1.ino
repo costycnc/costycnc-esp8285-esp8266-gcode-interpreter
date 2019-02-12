@@ -77,6 +77,7 @@ WiFi.softAP("Costycnc");
   while ((WiFi.status() != WL_CONNECTED) && attempt<10)//try 10 times to connect to router 
     // if not succeed ... connect locally
   {
+    attempt ++;
     delay(500);
     Serial.print(attempt);
   }
