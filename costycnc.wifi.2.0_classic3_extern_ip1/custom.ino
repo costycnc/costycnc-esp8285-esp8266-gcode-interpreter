@@ -27,6 +27,7 @@ void xplus() {
   String message="G01 X10 Y0\n";
   process_string(message,message.length());
   set_position(0.0, 0.0, 0.0);
+  disable_steppers();
 }
 
 void xminus() {
@@ -35,6 +36,7 @@ void xminus() {
   String message="G01 X0 Y0\n";
   process_string(message,message.length());
   set_position(0.0, 0.0, 0.0);
+  disable_steppers();
 }
 
 
@@ -44,7 +46,7 @@ void yplus() {
   String message="G01 X0 Y10\n";
   process_string(message,message.length());
   set_position(0.0, 0.0, 0.0);
-  
+  disable_steppers();
 }
 
 void yminus() {
@@ -53,6 +55,7 @@ void yminus() {
   String message="G01 X0 Y0\n";
   process_string(message,message.length());
   set_position(0.0, 0.0, 0.0);
+  disable_steppers();
 }
 
 
@@ -107,6 +110,7 @@ server.send(200, "text/html", "until cnc not finished cut you not can not make a
        }
     }
 f.close();
+disable_steppers();
 } 
 
  void arranqueweb()
@@ -680,6 +684,7 @@ String message;
       
 f.close();
 server.send(200, "text/html", message );
+disable_steppers();
 } 
 
 
@@ -721,6 +726,7 @@ String message;
       
 f.close();
 server.send(200, "text/html", message );
+disable_steppers();
 } 
 
 void rssi()
@@ -736,5 +742,3 @@ void header()
  server.sendHeader("bla","bla"); 
   server.send(200,"text/html","bla bla bla");
 }
-
-

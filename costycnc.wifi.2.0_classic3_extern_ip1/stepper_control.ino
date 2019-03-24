@@ -331,5 +331,6 @@ void disable_steppers()
 	//digitalWrite(X_ENABLE_PIN, LOW);
 	//digitalWrite(Y_ENABLE_PIN, LOW);
 	//digitalWrite(Z_ENABLE_PIN, LOW);
+     Serial.println("facut");
   
 }
