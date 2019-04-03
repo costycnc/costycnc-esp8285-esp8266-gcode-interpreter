@@ -1,5 +1,0 @@
-  unsigned long interval = 3600000;
-
-interval= millis()-interval;
-  Serial.println(interval);
-  interval=millis();
