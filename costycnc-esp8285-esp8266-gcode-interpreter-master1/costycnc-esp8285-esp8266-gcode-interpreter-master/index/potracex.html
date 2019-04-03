@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="a javascript port of potrace">
+    <meta name="keywords" content="potrace,trace,vectorization,svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>potrace</title>
+    <style>
+body {
+  margin: 30px;
+  background-color: #eee;
+}
+
+h1 {
+  font-weight:bold;
+  font-size:2.5em;
+  text-transform:capitalize;
+  letter-spacing: 0.1em;  
+}
+
+a:link, a:visited{
+  color:#6d6e73;
+}
+
+a:hover, a:focus, a:active {
+  color:#444;
+}
+
+p{
+  margin: 5px;
+}
+
+#imgdiv, #svgdiv {
+  display: none;
+  border: 2px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#drop {
+  border: 2px dashed #ccc;
+  width: 170px;
+  padding: 10px;
+  margin: 20px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+ 
+#drop.hovering{
+  border: 2px dashed #333;
+}
+
+#run, #save{
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 2px 5px;
+  text-decoration: none;
+  background-color: #ddd;
+}
+
+#run:hover, #save:hover{
+  background-color: #eee;
+}
+
+#imageInput {
+  display: none;
+}
+
+    </style>	
+  </head>
+
+  <body style="">
+    <header>
+      <h1>Costycnc</h1>
+    </header>
+
+    	
+    <article>
+
+<div id="drop"><a href="http://kilobtye.github.io/potrace/#" id="imageSelect">open an image</a> <br> or drag an image here</div>
+
+<p><textarea rows="10" cols="22" name="textg" id="gcode" form="usrform1">
+</textarea>
+<p>Zoom<input type="text" id="myText" value="1"></p>
+
+
+  <p><a href="/image"><button style="border-radius: 10%;" ><h2>Verify gcode</h2></button></a></p>
+
+  <p><a href="/fileread"><button style="border-radius: 10%;" ><h2>Begin cut</h2></button></a></p>
+
+
+<p><form id="myForm"> 
+  <button style="border-radius: 10%;" ><h2>Send file to cnc</h2></button>
+</form></p>
+      <input type="file" id="imageInput" accept="image/*">
+      
+      <div>
+        <h2><a href="http://costycnc.it" id="save">Save gcode</a></h2>
+
+      </div>
+      <div id="imgdiv"> </div>
+      <div> </div>
+      <div id="svgdiv"> </div>
+    </article>
+
+<script src="potracex.js"></script>
+<script>
+
+window.onload = function(){
+  var imageSelect = document.getElementById("imageSelect"),
+      imageInput = document.getElementById("imageInput");  
+  imageSelect.addEventListener("click", function (e) {
+    imageInput.click();
+    e.preventDefault();
+  }, false);
+  
+  imageInput.addEventListener("change", function (e) {
+    handleFiles(this.files);
+  }, false);
+  
+  
+  
+  document.getElementById("save").addEventListener("click", function (e) {
+	 e.target.download = "costy.nc";
+
+var y=document.getElementById("gcode").value
+	 e.target.href = "data:text/plain;," + y;
+  }, false);  
+  
+
+  
+  
+  
+};
+
+function handleFiles(files) {
+  Potrace.loadImageFromFile(files[0]);
+
+  Potrace.process(function(){
+    displayImg();
+    displaySVG(1);
+  });
+}
+
+function displayImg(){
+  var imgdiv = document.getElementById('imgdiv');
+  imgdiv.style.display = 'inline-block';
+  imgdiv.innerHTML = "<p>Input image:</p>";
+  imgdiv.appendChild(Potrace.img);
+
+}
+
+function displaySVG(size, type){
+  var svgdiv = document.getElementById('svgdiv');
+  svgdiv.style.display = 'inline-block';
+  svgdiv.innerHTML = "<p>Result:</p>" + Potrace.getSVG(1, type);
+
+
+  var gcode = document.getElementById('gcode');
+  var x=document.getElementById("myText").value;
+  gcode.value = Potrace.getSVG1(x);
+
+
+}
+
+//*********************blob***********************************
+
+
+ // sendData is our main function
+
+  function sendData() {
+/*   If there is a selected file, wait it is read
+    // If there is not, delay the execution of the function
+    if(!file.binary && file.dom.files.length > 0) {
+      setTimeout(sendData, 10);
+      return;
+    }
+*/
+    
+    var XHR = new XMLHttpRequest();
+
+    
+    var data = "";
+
+//var costycnc="1234";
+var costycnc = document.getElementById("gcode").value;
+
+alert(costycnc);
+
+   data = '--blob\r\ncontent-disposition: form-data;name="myFile";filename="test.nc"\r\nContent-Type:text/plain\r\n\r\n'+costycnc+'\r\n--blob--';
+
+/* --------------------------------------------------------------
+
+    // Define what happens on successful data submission
+    XHR.addEventListener('load', function(event) {
+      alert('Yeah! Data sent and response loaded.');
+    });
+
+    // Define what happens in case of error
+    XHR.addEventListener('error', function(event) {
+      alert('Oops! Something went wrong.');
+    });
+---------------------------------------------------------------*/
+    // Set up our request
+    XHR.open('POST', '/upload');
+
+    // Add the required HTTP header to handle a multipart form data POST request
+    XHR.setRequestHeader('Content-Type','multipart/form-data; boundary=blob');
+
+    // And finally, send our data.
+    XHR.send(data);
+  }
+
+  // Access our form...
+  var form = document.getElementById("myForm");
+
+  // ...to take over the submit event
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    sendData();
+//window.open ('/potracex','_self',false)
+
+  });
+
+</script>
+
+  
+
+</body></html></script>
+
+  
+
+</body></html>

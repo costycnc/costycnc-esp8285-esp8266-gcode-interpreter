@@ -1,0 +1,181 @@
+27.10.2018
+
+
+
+
+-----------------------non prendeva valori in process_string.ino
+
+float x_units = X_STEPS_PER_MM;
+float y_units = Y_STEPS_PER_MM;
+float z_units = Z_STEPS_PER_MM;
+
+nu lua valori din file
+
+
+float x_units se incarca cu  X_STEPS_PER_MM prima ... daca modificam dupa aia X_STEPS_PER_MM 
+x_units ramanea cu prima valoare a lui X_STEPS_PER_MM ... deci nu puteam modifica x_units
+
+
+in custom.ino fileread() am pus init_process_string();
+
+iar in process_string.ino init_process_string() am pus 
+
+x_units = X_STEPS_PER_MM;
+y_units = Y_STEPS_PER_MM;
+
+acum merge cu valori din file
+---------------------
+
+deve guardare se faccio con questo
+
+
+					fp.x = search_string('X', instruction, size) + current_units.x;
+					fp.y = search_string('Y', instruction, size) + current_units.y;
+					fp.z = search_string('Z', instruction, size) + current_units.z;
+<<<<<<<<<<<<<<<<<<<<<
+
+am scos cartella GcodeCNCDemo-master
+<<<<<<<<<<<<<<<<<<<<<
+
+insert in costycnc.wifi.2.0_classic1.ino
+
+
+SPIFFS.begin();                           // Start the SPI Flash Files System
+----------------------
+readparam();
+--------------------
+  server.begin();
+
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+int X_STEPS_PER_MM=340; 
+int Y_STEPS_PER_MM=340;
+int FAST_XY_FEEDRATE=150;
+
+
+insert in custom.ino
+
+void (yminus)
+----------
+void readparam() {
+  
+String message="";
+byte param=0;
+char t;
+ File f = SPIFFS.open("/settings.txt", "r");
+ while(f.available()) {
+     t = f.read();
+     message += t;
+     if(t=='\r'){ //if line end
+      param++;
+      if(param==1){
+      X_STEPS_PER_MM=message.toInt(); 
+      Y_STEPS_PER_MM=X_STEPS_PER_MM;
+      }
+      if(param==2){
+      FAST_XY_FEEDRATE=message.toInt();  
+      } 
+     
+      message="";       //empty gcode string
+       }
+
+    }
+f.close();
+}
+
+---------
+void fileread)
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+in void image
+
+
+
+ File f = SPIFFS.open("/test.nc", "r");
+ while(f.available()) {
+     t = f.read();
+
+   >>>>  if(t=='/'){message = f.readStringUntil('\n');} //daca / e comment deve ignorare
+
+     // G01 X123.456 Y567.890\n
+
+ >>>>    //message += t; // l-am dezactivat ptr ca nu e folosit
+
+....
+
+
+
+       puncte +=" ";
+       
+     >>>>>>  //message="";       //empty gcode string
+       }
+     if(a==1) if(t !='X' && t !=' ') gcodex +=t; //write svg coordonate without 'X' and space
+
+     if(t=='X'){a=1;gcodex="";} //read line until 'X' (attention X high!!!)
+
+
+
+....
+
+am mutat de la inceput la sfarsit... si am adaugat message care e dimensiunea
+
+
+String inceput= "<!DOCTYPE html><html><head><script>document.body.innerHTML ='';</script>";
+inceput +="<meta name='viewport' content='width=device-width, initial-scale=1.0'></head><body><p>";
+inceput +=message;
+inceput +="</p><svg height='500' width='500'><g transform='scale(2)'><polyline points='";
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
++++++++++++++++++++++++++++++++
+
+in costycnc.wifi.2.0_classic1\index.html
+
+am schimbat http://192.168.4.1/costel ( era in timp real cu imagine dar astepta cateodata mult)
+cu http://192.168.4.1/fileread
+
+<p><a href="http://192.168.4.1/fileread"><button style="border-radius: 10%;" ><h2>Begin cut</h2></button></a></p>
+
+............
+
+in toate/index.html 
+
+am introdus head
+<!DOCTYPE html>
+<html>
+<head>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+</head>
+<body>
+
+si am incheiat cu 
+</body>
+</html>
+
+
+am introdus in ultima linie
+ <p>view image to cut  <a href="http://192.168.4.1/image">http://192.168.4.1/test</a></p>
+ <p>EDITOR <a href="http://192.168.4.1/potracex.html">http://192.168.4.1/potracex.html</a></p>
+
+
+am introdus buton cu movimenti
+
+<p><a href="http://192.168.4.1/xplus"><button style="border-radius: 10%;"><h2>X+</h2></button></a>
+
+  <a href="http://192.168.4.1/xminus"></a><button style="border-radius: 10%;"><a href="http://192.168.4.1/xminus"><h2>X-</h2><x-></x-></a>
+
+  <a href="http://192.168.4.1/yplus"></a></button><a href="http://192.168.4.1/yplus"><button style="border-radius: 10%;"><h2>Y+</h2></button></a>
+
+  <a href="http://192.168.4.1/yminus"><button style="border-radius: 10%;"><h2>Y-</h2></button></a></p>
+<p>Make movement and vait! Do not make multiple push movements!</p>
+
+
+

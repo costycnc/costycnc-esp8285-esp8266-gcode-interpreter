@@ -1,0 +1,17 @@
+change nome "test" to "speed1"   adaugat viewport pentru telefon
+
+in custom , prima fila e index.htm
+
+
+adaugat functie sendresp() prentru x+ x- y+ y- adaugat viewport pentru telefonon
+
+schimbat 
+int X_STEPS_PER_MM=128; 
+int Y_STEPS_PER_MM=128;
+int FAST_XY_FEEDRATE=200;
+
+in file settings.txt
+
+128
+128
+200

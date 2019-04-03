@@ -1,0 +1,30 @@
+
+https://github.com/esp8266/Arduino/issues/3205
+
+
+in custom >>> void image 
+
+am introdus 
+
+ 
+server.setContentLength(CONTENT_LENGTH_UNKNOWN);
+server.send(200, "text/html", "");
+
+server.sendContent(..............................);
+
+
+server.sendContent(puncte);
+
+
+server.sendContent(............................);
+
+server.client().stop();
+
+
+
+pentru a putea trimite fisiere oricat de mari 
+
+
+---------------------------------------------------------------------------
+
+in index.html am scos cateva linkuri cu <!--       -->
