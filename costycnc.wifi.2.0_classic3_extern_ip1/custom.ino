@@ -7,6 +7,31 @@ char a[128]="COSTYCNC";
 
 int x=0;
 
+
+
+bool fileOpenFail;
+
+String LoadDataFromFile(String fileNameForSave)
+{
+  String WhatIwillReturn;
+  //SPIFFS.begin();
+  File f = SPIFFS.open(String("/"+fileNameForSave), "r");
+  if (!f)
+  {
+    fileOpenFail = 1;
+    Serial.print("file open failed  :");
+    Serial.println(fileNameForSave);
+  }
+  else
+  {
+    fileOpenFail = 0;
+    WhatIwillReturn =  f.readStringUntil('\r');
+    WhatIwillReturn.replace("\n", "");
+    f.close();
+    return WhatIwillReturn;
+  }
+}
+
 void sendresp() {
   
 String text= "<!DOCTYPE html><html><head>";
@@ -415,15 +440,26 @@ void list()
 {
   
   String str = "<p>go to <a href='index.html'>index</a></p>";
+  String strnumar;
+  int intnumar=0;
 Dir dir = SPIFFS.openDir("/");
 while (dir.next()) {
     str += dir.fileName();
-    str += " / ";
+    str += "-------";
     str += dir.fileSize();
-    str += "\r\n";
+    intnumar +=dir.fileSize();
+   
+    Serial.println(intnumar);
+    str += " bytes<br>";
    
     
 }
+str +="<br><br>Free space ";
+str +=500-(intnumar/1024);
+str +=" Kb<br>";
+str +="Used space ";
+str +=intnumar/1024;
+str +=" Kb";
 Serial.print(str);  
 server.send(200, "text/html", str);
 }
