@@ -35,8 +35,8 @@ int FAST_XY_FEEDRATE=200;
 #include <ESP8266WebServer.h>
 #include <FS.h>   // Include the SPIFFS library
 
-const char* ssid = "Infostrada-2.4GHz-02C3F6";
-const char* password = "costycnc1967";
+String ssid;
+String password;
 
 ESP8266WebServer server(80);
 
@@ -67,20 +67,33 @@ void setup() {
   Serial.println('\n');
   
 //**************************************************************
+SPIFFS.begin(); 
+
+
+ssid=LoadDataFromFile("ssid.txt");
+password=LoadDataFromFile("password.txt");
+
 ESP.eraseConfig();
 WiFi.disconnect(true);
 WiFi.mode(WIFI_AP);
 WiFi.softAP("Costycnc");
-  Serial.printf("Connecting to %s ", ssid);
+  //Serial.printf("Try connecting to %s ", ssid1);
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED)
+  int attempt=0;
+  while ((WiFi.status() != WL_CONNECTED) && attempt<10)//try 10 times to connect to router 
+    // if not succeed ... connect locally
   {
+    attempt ++;
     delay(500);
-    Serial.print(".");
-  }
-  Serial.println(" connected");
+    Serial.print(attempt);
 
-SPIFFS.begin();                           // Start the SPI Flash Files System
+  }
+  if(attempt < 10){
+  Serial.println(" connected to router and local");}
+    else{
+      Serial.println(" connected only local");
+}
+                          // Start the SPI Flash Files System
 
 readparam();
 
@@ -197,5 +210,3 @@ void handleFileUpload(){ // upload a new file to the SPIFFS
     }
   }
 }
-
-
