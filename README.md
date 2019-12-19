@@ -24,7 +24,7 @@ This variant is in acces point mode that mean that you not can use your internet
 
 need to disconnect from costycnc wifi and connect to your wifi ... but in future i work to resolve this problem.
 
-The program can be uploaded in esp8266 with arduino settings:
+The program can be uploaded in esp8285 with arduino settings:
 
 Board:"Generic ESP8285 Module"
 
