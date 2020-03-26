@@ -1,7 +1,7 @@
 # costycnc-wifi
 
 
-You can ulpoad binary file "costycnc.wifi.1.10.cpp.bin" with https://github.com/nodemcu/nodemcu-flasher
+You can ulpoad binary file https://github.com/costycnc/costycnc-esp8285-esp8266-gcode-interpreter/raw/master/costycnc.wifi.1.10.cpp.bin with https://github.com/nodemcu/nodemcu-flasher
 
 see video on youtube https://www.youtube.com/watch?v=yehDBSj7vIg
 
