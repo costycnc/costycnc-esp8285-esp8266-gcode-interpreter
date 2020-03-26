@@ -1,5 +1,8 @@
 # costycnc-wifi
 
+
+You can ulpoad binary file "costycnc.wifi.1.10.cpp.bin" with https://github.com/nodemcu/nodemcu-flasher
+
 see video on youtube https://www.youtube.com/watch?v=yehDBSj7vIg
 
 Now costycnc serial program grbl decoder for 2 unipolar steppers in in wifi.
